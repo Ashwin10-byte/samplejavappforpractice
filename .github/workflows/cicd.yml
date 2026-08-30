@@ -32,6 +32,19 @@ jobs:
           -Dsonar.organization=ashwin10-byte
           -Dsonar.projectKey=Ashwin10-byte_samplejavappforpractice
 
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: ashwinmendon/samplejavappforpractice:latest
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
