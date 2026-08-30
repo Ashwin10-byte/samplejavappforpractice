@@ -45,6 +45,7 @@ jobs:
       with:
         method: kubeconfig
         kubeconfig: ${{ secrets.KUBECONFIG }}
+        insecure-skip-tls-verify: true
 
     - name: Deploy to Kubernetes
       run: |
