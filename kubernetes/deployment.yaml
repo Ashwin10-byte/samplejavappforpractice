@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: sample-java-app
-        image: ashwin10/samplejavappforpractice:latest
+        image: ashwinmendon/samplejavappforpractice:latest
         ports:
         - containerPort: 8080
 ---
