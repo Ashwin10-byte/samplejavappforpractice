@@ -1,0 +1,51 @@
+name: End to End CI/CD workflow for Java Application with Maven, Sonar and k8s Integration
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Build with Maven
+      run: mvn clean install
+
+    - name: Perform analysis on SonarQube / SonarCloud
+      uses: SonarSource/sonarcloud-github-action@v3.0.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TKN }}
+      with:
+        args: >
+          -Dsonar.organization=<YOUR_SONAR_ORG>
+          -Dsonar.projectKey=<YOUR_PROJECT_KEY>
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Kubernetes Context
+      uses: azure/k8s-set-context@v4
+      with:
+        method: kubeconfig
+        kubeconfig: ${{ secrets.KUBECONFIG }}
+
+    - name: Deploy to Kubernetes
+      run: |
+        kubectl apply -f kubernetes/
