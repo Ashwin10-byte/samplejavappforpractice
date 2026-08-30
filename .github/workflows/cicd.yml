@@ -29,8 +29,8 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TKN }}
       with:
         args: >
-          -Dsonar.organization=<YOUR_SONAR_ORG>
-          -Dsonar.projectKey=<YOUR_PROJECT_KEY>
+          -Dsonar.organization=ashwin10-byte
+          -Dsonar.projectKey=Ashwin10-byte_samplejavappforpractice
 
   deploy:
     needs: build
