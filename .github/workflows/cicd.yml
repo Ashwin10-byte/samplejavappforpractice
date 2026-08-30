@@ -3,7 +3,7 @@ name: End to End CI/CD workflow for Java Application with Maven, Sonar and k8s I
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
